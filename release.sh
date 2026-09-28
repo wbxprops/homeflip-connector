@@ -8,7 +8,6 @@
 #    main, via `git subtree split` (the source of truth stays in ai-projects)
 # 3. Creates GitHub release vX.Y.Z with homeflip-connector.zip + info.json, which is what
 #    every site's updater reads (includes/updater.php)
-# 4. Copies the zip to ~/Downloads for a manual install
 #
 # Commit the connector changes in ai-projects FIRST: subtree split publishes commits,
 # not the working tree. The script refuses to run with uncommitted connector changes.
@@ -70,6 +69,4 @@ JSON
 gh release create "$TAG" "$TMP/homeflip-connector.zip" "$TMP/info.json" \
 	--repo "$REPO" --target main --title "$TAG" --notes "HomeFlip Connector $VERSION"
 
-# 4. manual-install copy
-cp "$ZIP" "$HOME/Downloads/"
-echo "Done: $TAG published; $(basename "$ZIP") copied to Downloads."
+echo "Done: $TAG published. Sites pick it up via Dashboard -> Updates (or auto-updates)."

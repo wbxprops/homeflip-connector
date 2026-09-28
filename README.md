@@ -89,8 +89,8 @@ email notification.
 `Update URI: https://github.com/wbxprops/homeflip-connector` routes WordPress's update check to
 `info.json` on the latest GitHub release, so sites get the normal "Update now" and can
 auto-update. The repo is public on purpose (no credentials in the code; a private repo would
-need a token cloned into every site). **For now (Gary, 2026-09-28) installs stay manual from
-Downloads**; the updater is there so switching over is just clicking Update.
+need a token cloned into every site). **Updates come from GitHub (Gary, 2026-09-28):** Dashboard -> Updates -> Check again ->
+Update, or "Enable auto-updates" on the plugin row. No more zips in Downloads.
 
 **0.3.0** adds page designs and business details:
 
