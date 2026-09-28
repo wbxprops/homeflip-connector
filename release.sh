@@ -52,7 +52,7 @@ print('built', out)
 PY
 
 # 2. code -> GitHub main
-git subtree split --prefix=homeflip-connector -b connector-publish >/dev/null
+git subtree split --prefix=homeflip-connector -b connector-publish >/dev/null 2>&1
 git push "https://github.com/$REPO.git" connector-publish:main
 git branch -D connector-publish >/dev/null
 
