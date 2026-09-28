@@ -4,12 +4,13 @@
  * Description:       Receives property data from the HomeFlip CRM and renders it into any
  *                    page builder via shortcodes. Registers the `property` post type and
  *                    the HomeFlip meta fields, exposed to the REST API.
- * Version:           0.1.0
+ * Version:           0.2.2
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            HomeFlip
  * License:           GPL-2.0-or-later
  * Text Domain:       homeflip
+ * Update URI:        https://github.com/wbxprops/homeflip-connector
  *
  * ---------------------------------------------------------------------------
  * WHY SHORTCODES AND NOT A WIDGET REWRITE
@@ -37,7 +38,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-const HOMEFLIP_POST_TYPE = 'property';
+const HOMEFLIP_POST_TYPE   = 'property';
+const HOMEFLIP_PLUGIN_FILE = __FILE__;
+
+require_once __DIR__ . '/includes/cache.php';
+require_once __DIR__ . '/includes/forms.php';
+require_once __DIR__ . '/includes/updater.php';
 
 /**
  * The HomeFlip-owned fields.

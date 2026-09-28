@@ -57,28 +57,55 @@ add `custom-fields` support rather than re-registering and clobbering its rewrit
 
 ## Status
 
-Core written, **not yet installed or run anywhere.** No PHP available locally, so the
-syntax is unlinted.
+**0.1.0** installed and active on the REI Base template site (`rei-template.tempurl.host`),
+2026-09-22. Meta round trip verified over REST 2026-09-28 (post 21).
 
-### The test that decides the next piece
+**0.2.0** (2026-09-28, installed + verified same day) adds:
 
-The plan's §12 starts with the flush endpoint. Whether it's still needed depends on one
-measurement — does Elementor's element cache also cache **shortcode output**?
+- **Cache purge** (`includes/cache.php`). Measured 2026-09-28: a meta-only change left the
+  public page on the OLD price with `X-Cache: HIT`, and two full post saves did not clear it.
+  That is WPMU DEV hosting's Static Server Cache, not Elementor (the test page had no Elementor
+  data). Every `homeflip_*` meta change or `property` save now purges it
+  (`wpmudev_hosting_purge_static_cache()`) plus Elementor's cache, once per request.
+  Manual backstop: `POST /wp-json/homeflip/v1/flush`.
+- **Buyer forms** (`includes/forms.php`), created once through `Forminator_API::add_form` on
+  the first wp-admin load: **Buyer Profile** (-> `contacts`) and **Next Purchase (Buyer
+  Criteria)** (-> one `buyer_criteria_sets` row). Answer values are the CRM keys from
+  `homeflip-crm/src/lib/wholesale/criteria.ts`. IDs are kept in the `homeflip_form_ids`
+  option, which clones copy. `GET /wp-json/homeflip/v1/forms` lists IDs, shortcodes, fields.
 
-1. Install and activate on whitebox.properties
-2. On a scratch page, drop a Shortcode widget containing `[homeflip_price]`
-3. Set `homeflip_price` on that post via REST, load the page, confirm it renders
-4. Change the meta via REST **without touching the post**, reload
-   - renders the new value → the cache doesn't reach shortcode output, and the flush
-     endpoint may be unnecessary
-   - renders the old value → flush endpoint stays job #1
+Verified on the template 2026-09-28: forms created as **23** (Buyer Profile) and **24** (Next
+Purchase), all fields, CRM answer keys, show/hide rules and page-URL field rendering; a price
+change now shows on the very next page load (`X-Cache: MISS`), and `/flush` purges both layers.
 
-Post **9024** is the known stale-cache case and post **9086** is the live Roselawn page
-(CRM property 5022), so both are available as real comparisons.
+**0.2.1** fixes the blank submit button: WPMU DEV's API example uses the pre-migration settings
+format. Settings now come from Forminator 1.57.3's own blank template (`submitData`,
+`submission-behaviour`). Existing forms are rebuilt **in place** (same IDs) when
+`HOMEFLIP_FORMS_VERSION` moves, carrying over their settings and notifications, because
+`Forminator_API::update_form` replaces both wholesale and would silently delete the admin
+email notification.
+
+**0.2.2** adds self-hosted updates (`includes/updater.php`): the header's
+`Update URI: https://github.com/wbxprops/homeflip-connector` routes WordPress's update check to
+`info.json` on the latest GitHub release, so sites get the normal "Update now" and can
+auto-update. The repo is public on purpose (no credentials in the code; a private repo would
+need a token cloned into every site). **For now (Gary, 2026-09-28) installs stay manual from
+Downloads**; the updater is there so switching over is just clicking Update.
+
+No PHP available locally, so syntax is checked by installing on the template site.
+
+## Releasing
+
+1. Bump `Version:` in `homeflip-connector.php`
+2. Commit in ai-projects (the script refuses uncommitted connector changes)
+3. `bash homeflip-connector/release.sh` builds the zip, pushes this folder to
+   `github.com/wbxprops/homeflip-connector` main (`git subtree split`; the source of truth stays
+   here), creates release `vX.Y.Z` with `homeflip-connector.zip` + `info.json`, and copies the
+   zip to Downloads
 
 ## Still to build
 
-- Pairing + per-site token (§7 job 3) — for now, the existing app password works
-- Flush endpoint (§7 job 1) — pending the test above
-- Forminator form shipping (§7 job 4)
+- Pairing + per-site token (§7 job 3) — for now, the app password works
+- Form submissions -> CRM (n8n intake: contact upsert by email, criteria set insert, consent
+  fields `marketing_consent_at/_url/_text`)
 - Generator change: write `meta` instead of splicing `_elementor_data`
