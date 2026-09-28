@@ -1,7 +1,7 @@
 {
  "slug": "terms",
  "title": "Terms",
- "homeflip_version": 1,
+ "homeflip_version": 2,
  "type": "page",
  "page": {
   "title": "Terms",
@@ -116,7 +116,7 @@
      "widgetType": "text-editor",
      "elements": [],
      "settings": {
-      "editor": "\n<p>By using this website you agree to these terms. If you do not agree, please do not use the\nsite.</p>\n<h3>No obligation</h3>\n<p>Submitting a form does not obligate you to sell your property or to buy any property. Any\noffer we make is subject to a written purchase agreement signed by both parties.</p>\n<h3>Property information</h3>\n<p>Property details, photos, prices and estimates on this site are provided for information\nonly and may change. Buyers are responsible for their own inspection and due diligence.</p>\n<h3>Text message program</h3>\n<p>[homeflip_business field=\"name\"] sends text messages about properties and our services to people who opted in on this\nwebsite. Message frequency varies. Message and data rates may apply. Reply STOP to cancel and\nHELP for help. Carriers are not liable for delayed or undelivered messages. See our\n<a href=\"/privacy-policy/\">Privacy Policy</a>.</p>\n<h3>Contact</h3>\n<p>[homeflip_business field=\"name\"]<br>[homeflip_business field=\"address\"]<br>[homeflip_business field=\"email\"]<br>[homeflip_business field=\"phone\"]</p>",
+      "editor": "\n<p>By using this website you agree to these terms. If you do not agree, please do not use the\nsite.</p>\n<h3>No obligation</h3>\n<p>Submitting a form does not obligate you to sell your property or to buy any property. Any\noffer we make is subject to a written purchase agreement signed by both parties.</p>\n<h3>Property information</h3>\n<p>Property details, photos, prices and estimates on this site are provided for information\nonly and may change. Buyers are responsible for their own inspection and due diligence.</p>\n<h3>Text message program</h3>\n<p>[homeflip_business field=\"name\"] sends text messages about properties and our services to people who opted in on this\nwebsite. Message frequency varies. Message and data rates may apply. Reply STOP to cancel and\nHELP for help. Carriers are not liable for delayed or undelivered messages. See our\n<a href=\"/privacy-policy/\">Privacy Policy</a>.</p>\n<h3>Contact</h3>\n<p>[homeflip_contact address=\"yes\"]</p>",
       "align": "left",
       "typography_typography": "custom",
       "typography_font_size": {

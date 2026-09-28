@@ -13,7 +13,7 @@
  * the phone button is its own shortcode, [homeflip_phone_button].
  *
  * Empty on the template on purpose: it is cloned, and a business detail in it
- * would show on every customer's site. Editors see a red "[phone not set]".
+ * would show on every customer's site. Set on HomeFlip -> Website Setup.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -39,28 +39,77 @@ function homeflip_business( $field ) {
 	return is_array( $all ) && isset( $all[ $field ] ) ? (string) $all[ $field ] : '';
 }
 
+/**
+ * [homeflip_business field="city" before="Sell your house fast in " fallback="Sell your house fast"]
+ *
+ * Filled: before + value + after. Empty: the fallback, for EVERYONE -- no red
+ * "not set" marker on a public design (Gary, 2026-09-28: the markers made the
+ * template look broken). What is missing is listed on the Website Setup page
+ * instead. `name` falls back to the site title so it is never blank.
+ */
 function homeflip_business_shortcode( $atts ) {
-	$atts   = shortcode_atts( array( 'field' => '' ), $atts, 'homeflip_business' );
+	$atts   = shortcode_atts(
+		array(
+			'field'    => '',
+			'before'   => '',
+			'after'    => '',
+			'fallback' => '',
+		),
+		$atts,
+		'homeflip_business'
+	);
 	$fields = homeflip_business_fields();
 	if ( ! isset( $fields[ $atts['field'] ] ) ) {
 		return '';
 	}
 	$value = homeflip_business( $atts['field'] );
+	if ( '' === $value && 'name' === $atts['field'] ) {
+		$value = (string) get_option( 'blogname' );
+	}
 	if ( '' === $value ) {
-		return homeflip_empty_notice( $fields[ $atts['field'] ] );
+		return esc_html( $atts['fallback'] );
 	}
-	if ( 'email' === $atts['field'] ) {
-		return '<a href="mailto:' . esc_attr( $value ) . '">' . esc_html( $value ) . '</a>';
-	}
-	return esc_html( $value );
+	$shown = 'email' === $atts['field']
+		? '<a href="mailto:' . esc_attr( $value ) . '">' . esc_html( $value ) . '</a>'
+		: esc_html( $value );
+	return esc_html( $atts['before'] ) . $shown . esc_html( $atts['after'] );
 }
 
-/** A tap-to-call button. Styled with Elementor's own button classes. */
+/**
+ * [homeflip_contact] -- name, service area, address, email, phone: only the lines
+ * that are filled in, so an unset detail leaves no blank gap. Name falls back to
+ * the site title.
+ */
+function homeflip_contact_shortcode( $atts ) {
+	$atts  = shortcode_atts( array( 'address' => 'no' ), $atts, 'homeflip_contact' );
+	$name  = homeflip_business( 'name' );
+	$name  = '' !== $name ? $name : (string) get_option( 'blogname' );
+	$lines = array( '<strong>' . esc_html( $name ) . '</strong>' );
+	foreach ( array( 'area', 'address', 'email', 'phone' ) as $f ) {
+		if ( 'address' === $f && 'yes' !== $atts['address'] ) {
+			continue;
+		}
+		$v = homeflip_business( $f );
+		if ( '' === $v ) {
+			continue;
+		}
+		if ( 'email' === $f ) {
+			$lines[] = '<a href="mailto:' . esc_attr( $v ) . '">' . esc_html( $v ) . '</a>';
+		} elseif ( 'phone' === $f ) {
+			$lines[] = '<a href="tel:' . esc_attr( preg_replace( '/[^0-9+]/', '', $v ) ) . '">' . esc_html( $v ) . '</a>';
+		} else {
+			$lines[] = esc_html( $v );
+		}
+	}
+	return implode( '<br>', $lines );
+}
+
+/** A tap-to-call button, styled with Elementor's own button classes. Nothing when no phone. */
 function homeflip_phone_button_shortcode( $atts ) {
 	$atts  = shortcode_atts( array( 'label' => '' ), $atts, 'homeflip_phone_button' );
 	$phone = homeflip_business( 'phone' );
 	if ( '' === $phone ) {
-		return homeflip_empty_notice( 'Phone' );
+		return '';
 	}
 	$digits = preg_replace( '/[^0-9+]/', '', $phone );
 	$label  = '' !== $atts['label'] ? $atts['label'] . ' ' . $phone : $phone;
@@ -109,6 +158,7 @@ function homeflip_find_form_id( $needle ) {
 function homeflip_register_business_shortcodes() {
 	add_shortcode( 'homeflip_business', 'homeflip_business_shortcode' );
 	add_shortcode( 'homeflip_phone_button', 'homeflip_phone_button_shortcode' );
+	add_shortcode( 'homeflip_contact', 'homeflip_contact_shortcode' );
 	add_shortcode( 'homeflip_form', 'homeflip_form_shortcode' );
 }
 add_action( 'init', 'homeflip_register_business_shortcodes' );

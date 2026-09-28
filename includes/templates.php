@@ -199,6 +199,61 @@ function homeflip_set_default_palette() {
 }
 
 /**
+ * A "Main Menu" linking the starter pages, in the theme's header menu slot
+ * (Hello Elementor: menu-1). Once: a customer's own menu edits are never touched.
+ */
+function homeflip_install_menu() {
+	if ( get_option( 'homeflip_menu_done' ) ) {
+		return;
+	}
+	$pages = (array) get_option( HOMEFLIP_PAGES_OPTION, array() );
+	if ( empty( $pages['home'] ) ) {
+		return;
+	}
+	$menu_id = wp_create_nav_menu( 'Main Menu' );
+	if ( is_wp_error( $menu_id ) ) {
+		$menu = wp_get_nav_menu_object( 'Main Menu' );
+		$menu_id = $menu ? (int) $menu->term_id : 0;
+	}
+	if ( ! $menu_id ) {
+		return;
+	}
+	$items = array(
+		array( 'Sell Your House', 'home', '' ),
+		array( 'Get an Offer', 'home', '#offer' ),
+		array( 'Buyers List', 'buyers-list', '' ),
+		array( 'Your Buy Box', 'buy-box', '' ),
+	);
+	foreach ( $items as $item ) {
+		list( $label, $slug, $hash ) = $item;
+		if ( empty( $pages[ $slug ] ) ) {
+			continue;
+		}
+		$args = array(
+			'menu-item-title'  => $label,
+			'menu-item-status' => 'publish',
+		);
+		if ( $hash ) {
+			$args['menu-item-type'] = 'custom';
+			$args['menu-item-url']  = home_url( '/' ) . $hash;
+		} else {
+			$args['menu-item-type']      = 'post_type';
+			$args['menu-item-object']    = 'page';
+			$args['menu-item-object-id'] = (int) $pages[ $slug ];
+		}
+		wp_update_nav_menu_item( $menu_id, 0, $args );
+	}
+	$locations = (array) get_theme_mod( 'nav_menu_locations', array() );
+	foreach ( array_keys( (array) get_registered_nav_menus() ) as $loc ) {
+		if ( empty( $locations[ $loc ] ) && false === strpos( $loc, 'footer' ) ) {
+			$locations[ $loc ] = $menu_id; // header slot(s) only
+		}
+	}
+	set_theme_mod( 'nav_menu_locations', $locations );
+	update_option( 'homeflip_menu_done', 1, false );
+}
+
+/**
  * Starter pages only ever appear on their own on a FRESH site (the template, and
  * so every clone). On a site that already has real pages -- whitebox.properties,
  * or a customer bringing an existing site -- installing the plugin must not add
@@ -225,6 +280,8 @@ function homeflip_maybe_install_templates() {
 	homeflip_install_library();
 	if ( homeflip_is_fresh_site() ) {
 		homeflip_install_pages();
+		homeflip_install_menu();
+		homeflip_install_placeholders();
 	}
 	delete_transient( 'homeflip_templates_lock' );
 }
@@ -261,6 +318,8 @@ function homeflip_register_templates_route() {
 					homeflip_set_default_palette();
 					$library = homeflip_install_library( true );
 					$pages   = homeflip_install_pages( (bool) $req->get_param( 'refresh_pages' ) );
+					homeflip_install_menu();
+					homeflip_install_placeholders();
 					return rest_ensure_response(
 						array(
 							'library' => $library,

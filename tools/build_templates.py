@@ -11,7 +11,7 @@ older one (includes/templates.php).
 
 Rules every design follows:
 - FREE Elementor widgets only (no Pro, no PowerPack): heading, text-editor, button,
-  icon-list, icon-box, testimonial, shortcode.
+  icon-list, icon-box, shortcode.
 - Colors are Elementor GLOBAL colors (primary / secondary / text / accent), never
   hex, so a customer re-skins every page from Site Settings -> Global Colors.
 - No business detail is ever typed in. Name, phone, city... come from
@@ -56,7 +56,7 @@ def px(top, right=None, bottom=None, left=None):
 
 # --------------------------------------------------------------------------- blocks
 
-def section(children, bg=None, dark=False, anchor='', pad=80, narrow=False):
+def section(children, bg=None, dark=False, anchor='', pad=80, narrow=False, css=''):
     """Full-width band with a boxed column of content."""
     s = {
         'content_width': 'boxed',
@@ -73,6 +73,8 @@ def section(children, bg=None, dark=False, anchor='', pad=80, narrow=False):
         s['__globals__'] = {'background_color': G(bg)}
     if anchor:
         s['_element_id'] = anchor
+    if css:
+        s['css_classes'] = css
     return {'id': _id('sec'), 'elType': 'container', 'isInner': False, 'settings': s,
             'elements': [_on_dark(c) if dark else c for c in children]}
 
@@ -168,13 +170,6 @@ def step(icon, title, body):
                                          'description_color': G('text')}}}
 
 
-def testimonial(quote, name, where):
-    return {'id': _id('q'), 'elType': 'widget', 'widgetType': 'testimonial', 'elements': [],
-            'settings': {'testimonial_content': quote, 'testimonial_name': name,
-                         'testimonial_job': where, 'testimonial_alignment': 'center',
-                         '__globals__': {'content_content_color': G('text'),
-                                         'name_text_color': G('primary')}}}
-
 
 def faq(q, a):
     return [heading(q, 'h3', 'left', 21), text(f'<p>{a}</p>', 'left', 17)]
@@ -191,7 +186,7 @@ SMS_NOTE = ('<p style="font-size:13px">By providing your phone number, you agree
 def contact_band():
     return section([
         heading('Questions? Talk to a real person.', 'h2', 'center', 30),
-        text(f'<p><strong>{B("name")}</strong><br>{B("area")}<br>{B("email")}</p>'),
+        text('<p>[homeflip_contact]</p>'),
         shortcode('[homeflip_phone_button label="Call or text"]'),
         text(SMS_NOTE),
     ], bg='secondary', pad=60)
@@ -202,8 +197,9 @@ def contact_band():
 def page_home():
     return [
         section([
-            text(f'<p style="letter-spacing:2px;font-weight:700;text-transform:uppercase">'
-                 f'Sell your house fast in {B("city")}</p>', px_size=15),
+            text('<p style="letter-spacing:2px;font-weight:700;text-transform:uppercase">'
+                 '[homeflip_business field="city" before="Sell your house fast in " '
+                 'fallback="Sell your house fast"]</p>', px_size=15),
             heading('Get a fair cash offer for your house. No repairs, no agents, no hassle.',
                     'h1', 'center', 48),
             checklist([
@@ -215,7 +211,7 @@ def page_home():
             ]),
             button('Get My Cash Offer', '#offer'),
             shortcode('[homeflip_phone_button label="Or call"]'),
-        ], bg='primary', dark=True, pad=100),
+        ], bg='primary', dark=True, pad=110, css='homeflip-hero'),
 
         section([
             heading('How it works', 'h2'),
@@ -237,15 +233,9 @@ def page_home():
             shortcode('[homeflip_form name="seller"]'),
         ], bg='secondary', anchor='offer', narrow=True),
 
-        section([
-            heading('What homeowners say', 'h2'),
-            row([
-                testimonial('[Paste a real quote from a seller you have helped.]',
-                            '[First name]', '[City, State]'),
-                testimonial('[Paste a real quote from a seller you have helped.]',
-                            '[First name]', '[City, State]'),
-            ], 2),
-        ]),
+        # Filled from HomeFlip -> Website Setup; the band hides itself when empty
+        # (never ship invented or bracketed testimonials on a live site).
+        section([shortcode('[homeflip_testimonials]')], css='homeflip-t-section'),
 
         section([
             heading('Frequently asked questions', 'h2'),
@@ -287,7 +277,7 @@ def page_buyers_list():
             heading('Get off-market deals before anyone else', 'h1', 'center', 44),
             text('<p>Join our buyers list. When we have a property that fits what you buy, '
                  'you hear about it first.</p>'),
-        ], bg='primary', dark=True, pad=80),
+        ], bg='primary', dark=True, pad=90, css='homeflip-hero'),
         section([
             heading('Join our buyers list', 'h2', 'center', 30),
             shortcode('[homeflip_form name="buyer_profile"]'),
@@ -304,7 +294,7 @@ def page_buy_box():
             heading('Tell us what you want to buy next', 'h1', 'center', 44),
             text('<p>Describe your next purchase: where, what price, what condition. We match '
                  'every deal we get against your buy box and send you the ones that fit.</p>'),
-        ], bg='primary', dark=True, pad=80),
+        ], bg='primary', dark=True, pad=90, css='homeflip-hero'),
         section([
             text('<p>Buying different things in different areas? Fill this out once for each '
                  'one. Use the same email every time.</p>', px_size=16),
@@ -348,7 +338,7 @@ and when required by law.</p>
 <p>You can ask us to update or delete your information, or unsubscribe from emails at any time
 using the link in any email.</p>
 <h3>Contact us</h3>
-<p>{n}<br>{B("address")}<br>{B("email")}<br>{B("phone")}</p>''')
+<p>[homeflip_contact address="yes"]</p>''')
 
 
 def page_terms():
@@ -368,20 +358,20 @@ website. Message frequency varies. Message and data rates may apply. Reply STOP 
 HELP for help. Carriers are not liable for delayed or undelivered messages. See our
 <a href="/privacy-policy/">Privacy Policy</a>.</p>
 <h3>Contact</h3>
-<p>{n}<br>{B("address")}<br>{B("email")}<br>{B("phone")}</p>''')
+<p>[homeflip_contact address="yes"]</p>''')
 
 
 PAGES = [
     # slug, title, VERSION, starter page (title, path, flags) or None, builder
-    ('home', 'Home: We Buy Houses', 1,
+    ('home', 'Home: We Buy Houses', 2,
      {'title': 'Home', 'path': 'home', 'front_page': True}, page_home),
-    ('buyers-list', 'Join Our Buyers List', 1,
+    ('buyers-list', 'Join Our Buyers List', 2,
      {'title': 'Join Our Buyers List', 'path': 'buyers-list'}, page_buyers_list),
-    ('buy-box', 'Your Buy Box', 1,
+    ('buy-box', 'Your Buy Box', 2,
      {'title': 'Your Buy Box', 'path': 'buy-box'}, page_buy_box),
-    ('privacy-policy', 'Privacy Policy', 1,
+    ('privacy-policy', 'Privacy Policy', 2,
      {'title': 'Privacy Policy', 'path': 'privacy-policy', 'privacy_page': True}, page_privacy),
-    ('terms', 'Terms', 1,
+    ('terms', 'Terms', 2,
      {'title': 'Terms', 'path': 'terms'}, page_terms),
 ]
 

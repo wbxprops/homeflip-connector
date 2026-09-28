@@ -1,7 +1,7 @@
 {
  "slug": "buyers-list",
  "title": "Join Our Buyers List",
- "homeflip_version": 1,
+ "homeflip_version": 2,
  "type": "page",
  "page": {
   "title": "Join Our Buyers List",
@@ -24,24 +24,25 @@
     },
     "padding": {
      "unit": "px",
-     "top": "80",
+     "top": "90",
      "right": "20",
-     "bottom": "80",
+     "bottom": "90",
      "left": "20",
      "isLinked": false
     },
     "padding_mobile": {
      "unit": "px",
-     "top": "40",
+     "top": "45",
      "right": "16",
-     "bottom": "40",
+     "bottom": "45",
      "left": "16",
      "isLinked": false
     },
     "background_background": "classic",
     "__globals__": {
      "background_color": "globals/colors?id=primary"
-    }
+    },
+    "css_classes": "homeflip-hero"
    },
    "elements": [
     {
@@ -259,7 +260,7 @@
      "widgetType": "text-editor",
      "elements": [],
      "settings": {
-      "editor": "<p><strong>[homeflip_business field=\"name\"]</strong><br>[homeflip_business field=\"area\"]<br>[homeflip_business field=\"email\"]</p>",
+      "editor": "<p>[homeflip_contact]</p>",
       "align": "center",
       "typography_typography": "custom",
       "typography_font_size": {

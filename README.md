@@ -113,6 +113,19 @@ Designs (v1): Home (we buy houses), Join Our Buyers List, Your Buy Box, Privacy 
 Modeled on whitebox.properties home 4929 + seller sections 1702 / 1270 / 1273. The property deal
 page comes next, built from template 7860 with a real property.
 
+**0.4.0** (Gary, 2026-09-28: "we need placeholders... one page where the user sets up everything"):
+
+- **HomeFlip -> Website Setup** (`includes/setup.php`), one wp-admin screen: website title,
+  tagline, logo, browser icon, main + button color (written to Elementor Global Colors), business
+  details, homepage photo, up to 3 testimonials. Save purges caches.
+- **Placeholders** on a fresh site, once: `assets/logo-placeholder.png` as the logo and
+  `assets/hero-house.jpg` (CC0, see `assets/CREDITS.md`) behind every hero, under a brand-color
+  overlay. The photo is CSS on `.homeflip-hero`, so changing it never edits a page.
+- **No red markers on public designs.** `[homeflip_business]` takes `before` / `after` /
+  `fallback`; `[homeflip_contact]` prints only the filled lines; `[homeflip_testimonials]` prints
+  nothing when empty and its band hides (`:has()`).
+- A **Main Menu** in the header slot, once.
+
 No PHP available locally, so syntax is checked by installing on the template site.
 
 ## Releasing
