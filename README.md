@@ -92,6 +92,27 @@ auto-update. The repo is public on purpose (no credentials in the code; a privat
 need a token cloned into every site). **For now (Gary, 2026-09-28) installs stay manual from
 Downloads**; the updater is there so switching over is just clicking Update.
 
+**0.3.0** adds page designs and business details:
+
+- `includes/business.php`: the subscriber's name / phone / email / city / state / area /
+  address in one option, printed by `[homeflip_business field="..."]` and
+  `[homeflip_phone_button]`; `[homeflip_form name="..."]` places a form by name (HomeFlip's own
+  by key, others by title match, e.g. `seller`). `GET/POST homeflip/v1/business` (POST merges).
+  Empty on the template on purpose: it is cloned.
+- `includes/templates.php`: `templates/*.json` installed into Elementor's local library
+  ("HomeFlip - ..."), refreshed when a file's `homeflip_version` rises. On a FRESH site (5 pages
+  or fewer) it also creates the starter pages once and sets Home as the front page; customers own
+  those pages after that. `POST homeflip/v1/templates {"refresh_pages":true}` rebuilds them.
+  Replaces Elementor's stock light-blue palette with a neutral one (navy / orange) only if the
+  stock colors are still there.
+- `tools/build_templates.py` generates the designs (free widgets only, global colors only, no
+  typed-in business details, no invented guarantees or testimonials). Edit the generator, never
+  the JSON. Not shipped in the zip.
+
+Designs (v1): Home (we buy houses), Join Our Buyers List, Your Buy Box, Privacy Policy, Terms.
+Modeled on whitebox.properties home 4929 + seller sections 1702 / 1270 / 1273. The property deal
+page comes next, built from template 7860 with a real property.
+
 No PHP available locally, so syntax is checked by installing on the template site.
 
 ## Releasing

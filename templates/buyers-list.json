@@ -1,0 +1,312 @@
+{
+ "slug": "buyers-list",
+ "title": "Join Our Buyers List",
+ "homeflip_version": 1,
+ "type": "page",
+ "page": {
+  "title": "Join Our Buyers List",
+  "path": "buyers-list"
+ },
+ "content": [
+  {
+   "id": "5e9209b",
+   "elType": "container",
+   "isInner": false,
+   "settings": {
+    "content_width": "boxed",
+    "flex_direction": "column",
+    "flex_align_items": "center",
+    "flex_gap": {
+     "unit": "px",
+     "size": 20,
+     "column": "20",
+     "row": "20"
+    },
+    "padding": {
+     "unit": "px",
+     "top": "80",
+     "right": "20",
+     "bottom": "80",
+     "left": "20",
+     "isLinked": false
+    },
+    "padding_mobile": {
+     "unit": "px",
+     "top": "40",
+     "right": "16",
+     "bottom": "40",
+     "left": "16",
+     "isLinked": false
+    },
+    "background_background": "classic",
+    "__globals__": {
+     "background_color": "globals/colors?id=primary"
+    }
+   },
+   "elements": [
+    {
+     "id": "2f46934",
+     "elType": "widget",
+     "widgetType": "heading",
+     "elements": [],
+     "settings": {
+      "title": "Get off-market deals before anyone else",
+      "header_size": "h1",
+      "align": "center",
+      "typography_typography": "custom",
+      "typography_font_size": {
+       "unit": "px",
+       "size": 44
+      },
+      "typography_font_size_mobile": {
+       "unit": "px",
+       "size": 31
+      },
+      "typography_font_weight": "700",
+      "typography_line_height": {
+       "unit": "em",
+       "size": 1.2
+      },
+      "title_color": "#FFFFFF"
+     }
+    },
+    {
+     "id": "5ddc8a9",
+     "elType": "widget",
+     "widgetType": "text-editor",
+     "elements": [],
+     "settings": {
+      "editor": "<p>Join our buyers list. When we have a property that fits what you buy, you hear about it first.</p>",
+      "align": "center",
+      "typography_typography": "custom",
+      "typography_font_size": {
+       "unit": "px",
+       "size": 18
+      },
+      "typography_line_height": {
+       "unit": "em",
+       "size": 1.6
+      },
+      "text_color": "#FFFFFF"
+     }
+    }
+   ]
+  },
+  {
+   "id": "25a8e16",
+   "elType": "container",
+   "isInner": false,
+   "settings": {
+    "content_width": "boxed",
+    "flex_direction": "column",
+    "flex_align_items": "center",
+    "flex_gap": {
+     "unit": "px",
+     "size": 20,
+     "column": "20",
+     "row": "20"
+    },
+    "padding": {
+     "unit": "px",
+     "top": "80",
+     "right": "20",
+     "bottom": "80",
+     "left": "20",
+     "isLinked": false
+    },
+    "padding_mobile": {
+     "unit": "px",
+     "top": "40",
+     "right": "16",
+     "bottom": "40",
+     "left": "16",
+     "isLinked": false
+    },
+    "boxed_width": {
+     "unit": "px",
+     "size": 820
+    }
+   },
+   "elements": [
+    {
+     "id": "2efd21c",
+     "elType": "widget",
+     "widgetType": "heading",
+     "elements": [],
+     "settings": {
+      "title": "Join our buyers list",
+      "header_size": "h2",
+      "align": "center",
+      "typography_typography": "custom",
+      "typography_font_size": {
+       "unit": "px",
+       "size": 30
+      },
+      "typography_font_size_mobile": {
+       "unit": "px",
+       "size": 24
+      },
+      "typography_font_weight": "700",
+      "typography_line_height": {
+       "unit": "em",
+       "size": 1.2
+      },
+      "__globals__": {
+       "title_color": "globals/colors?id=primary"
+      }
+     }
+    },
+    {
+     "id": "c56c3fc",
+     "elType": "widget",
+     "widgetType": "shortcode",
+     "elements": [],
+     "settings": {
+      "shortcode": "[homeflip_form name=\"buyer_profile\"]"
+     }
+    },
+    {
+     "id": "5b35d0a",
+     "elType": "widget",
+     "widgetType": "text-editor",
+     "elements": [],
+     "settings": {
+      "editor": "<p>Already on the list? <a href=\"/buy-box/\">Tell us exactly what you want to buy next</a> and we will send you deals that match.</p>",
+      "align": "center",
+      "typography_typography": "custom",
+      "typography_font_size": {
+       "unit": "px",
+       "size": 18
+      },
+      "typography_line_height": {
+       "unit": "em",
+       "size": 1.6
+      },
+      "__globals__": {
+       "text_color": "globals/colors?id=text"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "148409e",
+   "elType": "container",
+   "isInner": false,
+   "settings": {
+    "content_width": "boxed",
+    "flex_direction": "column",
+    "flex_align_items": "center",
+    "flex_gap": {
+     "unit": "px",
+     "size": 20,
+     "column": "20",
+     "row": "20"
+    },
+    "padding": {
+     "unit": "px",
+     "top": "60",
+     "right": "20",
+     "bottom": "60",
+     "left": "20",
+     "isLinked": false
+    },
+    "padding_mobile": {
+     "unit": "px",
+     "top": "40",
+     "right": "16",
+     "bottom": "40",
+     "left": "16",
+     "isLinked": false
+    },
+    "background_background": "classic",
+    "__globals__": {
+     "background_color": "globals/colors?id=secondary"
+    }
+   },
+   "elements": [
+    {
+     "id": "f5d9757",
+     "elType": "widget",
+     "widgetType": "heading",
+     "elements": [],
+     "settings": {
+      "title": "Questions? Talk to a real person.",
+      "header_size": "h2",
+      "align": "center",
+      "typography_typography": "custom",
+      "typography_font_size": {
+       "unit": "px",
+       "size": 30
+      },
+      "typography_font_size_mobile": {
+       "unit": "px",
+       "size": 24
+      },
+      "typography_font_weight": "700",
+      "typography_line_height": {
+       "unit": "em",
+       "size": 1.2
+      },
+      "__globals__": {
+       "title_color": "globals/colors?id=primary"
+      }
+     }
+    },
+    {
+     "id": "28329c6",
+     "elType": "widget",
+     "widgetType": "text-editor",
+     "elements": [],
+     "settings": {
+      "editor": "<p><strong>[homeflip_business field=\"name\"]</strong><br>[homeflip_business field=\"area\"]<br>[homeflip_business field=\"email\"]</p>",
+      "align": "center",
+      "typography_typography": "custom",
+      "typography_font_size": {
+       "unit": "px",
+       "size": 18
+      },
+      "typography_line_height": {
+       "unit": "em",
+       "size": 1.6
+      },
+      "__globals__": {
+       "text_color": "globals/colors?id=text"
+      }
+     }
+    },
+    {
+     "id": "fe177e0",
+     "elType": "widget",
+     "widgetType": "shortcode",
+     "elements": [],
+     "settings": {
+      "shortcode": "[homeflip_phone_button label=\"Call or text\"]"
+     }
+    },
+    {
+     "id": "d21a313",
+     "elType": "widget",
+     "widgetType": "text-editor",
+     "elements": [],
+     "settings": {
+      "editor": "<p style=\"font-size:13px\">By providing your phone number, you agree to receive text messages from [homeflip_business field=\"name\"]. Message and data rates may apply. Message frequency varies. Reply STOP to opt out. See our <a href=\"/privacy-policy/\">Privacy Policy</a> and <a href=\"/terms/\">Terms</a>.</p>",
+      "align": "center",
+      "typography_typography": "custom",
+      "typography_font_size": {
+       "unit": "px",
+       "size": 18
+      },
+      "typography_line_height": {
+       "unit": "em",
+       "size": 1.6
+      },
+      "__globals__": {
+       "text_color": "globals/colors?id=text"
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

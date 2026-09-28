@@ -518,6 +518,18 @@ function homeflip_register_forms_route() {
 						'fields'    => $list,
 					);
 				}
+				// Every Forminator form on the site, including hand-built ones (the
+				// seller contact form), so designs can be checked against what exists.
+				$out['all'] = array();
+				if ( class_exists( 'Forminator_API' ) ) {
+					$forms = Forminator_API::get_forms( null, 1, 100 );
+					foreach ( is_wp_error( $forms ) ? array() : (array) $forms as $form ) {
+						$out['all'][] = array(
+							'id'    => (int) $form->id,
+							'title' => isset( $form->settings['formName'] ) ? $form->settings['formName'] : $form->name,
+						);
+					}
+				}
 				return rest_ensure_response( $out );
 			},
 		)

@@ -38,7 +38,7 @@ ZIP="$DIR/dist/homeflip-connector-$VERSION.zip"
 python - "$DIR" "$ZIP" <<'PY'
 import os, sys, zipfile
 src, out = sys.argv[1], sys.argv[2]
-skip_dirs = {'dist', '.git'}
+skip_dirs = {'dist', '.git', 'tools'}
 skip_files = {'release.sh'}
 with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
     for base, dirs, files in os.walk(src):
