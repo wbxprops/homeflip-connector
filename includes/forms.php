@@ -85,8 +85,10 @@ function homeflip_f_name() {
 		'type'           => 'name',
 		'field_label'    => 'Name',
 		'multiple_name'  => 'true',
-		'prefix'         => 'false',
-		'mname'          => 'false',
+		// Off = EMPTY, not 'false': name.php:227 reads prefix/mname without a bool
+		// cast, so the string 'false' is truthy and rendered a Mr./Mrs. dropdown.
+		'prefix'         => '',
+		'mname'          => '',
 		'fname'          => 'true',
 		'lname'          => 'true',
 		'fname_label'    => 'First name',
@@ -362,8 +364,9 @@ function homeflip_form_definitions() {
  * field change reaches every cloned customer site with a plugin update.
  *   1 = 0.2.0: first build (submit text set in the pre-1.x format -- rendered blank)
  *   2 = 0.2.1: settings in the current format (submitData, submission-behaviour)
+ *   3 = 0.3.1: name field prefix / middle name actually off
  */
-const HOMEFLIP_FORMS_VERSION = 2;
+const HOMEFLIP_FORMS_VERSION = 3;
 
 /**
  * Settings in Forminator's CURRENT format, read from 1.57.3's own
