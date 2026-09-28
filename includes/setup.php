@@ -1,6 +1,6 @@
 <?php
 /**
- * HomeFlip -> Website Setup: everything a customer sets up, on ONE screen.
+ * Your Brand: everything a customer sets up, on ONE screen (wp-admin menu "Your Brand").
  *
  * Gary, 2026-09-28: the starter pages looked unfinished (site address as the
  * title, no logo, no photo, red "not set" markers). A customer should not have
@@ -12,8 +12,6 @@
  *   Business details      -> homeflip_business (the [homeflip_business] shortcodes)
  *   Brand colors          -> Elementor kit Global Colors (every page follows)
  *   Homepage photo        -> homeflip_hero_image (behind the Home headline)
- *   Testimonials          -> homeflip_testimonials ([homeflip_testimonials];
- *                            the section hides itself when there are none)
  *
  * Placeholders (logo + house photo from assets/) are put in place once on a fresh
  * site, so the template looks finished before anyone touches it.
@@ -24,7 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 const HOMEFLIP_HERO_OPTION         = 'homeflip_hero_image';
-const HOMEFLIP_TESTIMONIALS_OPTION = 'homeflip_testimonials';
 
 /* -------------------------------------------------------------------------- */
 /* Placeholders                                                                */
@@ -77,6 +74,27 @@ function homeflip_install_placeholders() {
 	update_option( 'homeflip_placeholders_done', 1, false );
 }
 
+/**
+ * 0.4.2 reworded the placeholder logo ("...under Your Brand"). Sites still showing
+ * the OLD placeholder get the new one; a logo the customer uploaded is never touched.
+ */
+function homeflip_refresh_placeholder_logo() {
+	if ( (int) get_option( 'homeflip_placeholder_logo_v' ) >= 2 || ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	$old = (int) get_theme_mod( 'custom_logo' );
+	if ( $old && 'Placeholder logo' === get_the_title( $old ) ) {
+		$new = homeflip_import_asset( 'logo-placeholder.png', 'Placeholder logo' );
+		if ( $new ) {
+			set_theme_mod( 'custom_logo', $new );
+			wp_delete_attachment( $old, true );
+			homeflip_queue_purge();
+		}
+	}
+	update_option( 'homeflip_placeholder_logo_v', 2, false );
+}
+add_action( 'admin_init', 'homeflip_refresh_placeholder_logo', 30 );
+
 /* -------------------------------------------------------------------------- */
 /* Brand colors (Elementor kit)                                                */
 /* -------------------------------------------------------------------------- */
@@ -119,7 +137,7 @@ function homeflip_set_kit_color( $which, $hex ) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Front end: homepage photo + testimonials                                    */
+/* Front end: homepage photo                                                   */
 /* -------------------------------------------------------------------------- */
 
 /**
@@ -129,10 +147,8 @@ function homeflip_set_kit_color( $which, $hex ) {
  * any photo.
  */
 function homeflip_hero_css() {
-	// A testimonials band with nothing in it disappears instead of showing an
-	// empty gap (the shortcode prints nothing when no testimonials are entered).
-	echo "<style id=\"homeflip-front\">.homeflip-t-section:not(:has(.homeflip-testimonials)){display:none!important}</style>
-";
+	// Home pages built by 0.4.x hold an (now always empty) testimonials band.
+	echo '<style id="homeflip-front">.homeflip-t-section{display:none!important}</style>' . "\n";
 
 	$id  = (int) get_option( HOMEFLIP_HERO_OPTION );
 	$url = $id ? wp_get_attachment_image_url( $id, 'full' ) : '';
@@ -153,36 +169,15 @@ function homeflip_hero_css() {
 }
 add_action( 'wp_head', 'homeflip_hero_css', 99 );
 
-/** [homeflip_testimonials] -- heading + cards, or NOTHING when none are entered. */
-function homeflip_testimonials_shortcode( $atts ) {
-	$atts  = shortcode_atts( array( 'title' => 'What homeowners say' ), $atts, 'homeflip_testimonials' );
-	$items = array_filter(
-		(array) get_option( HOMEFLIP_TESTIMONIALS_OPTION, array() ),
-		function ( $t ) {
-			return ! empty( $t['quote'] );
-		}
-	);
-	if ( ! $items ) {
-		return '';
-	}
-	$html = '<div class="homeflip-testimonials"><h2 class="homeflip-t-title">' . esc_html( $atts['title'] ) . '</h2><div class="homeflip-t-grid">';
-	foreach ( $items as $t ) {
-		$who   = trim( ( $t['name'] ?? '' ) . ( ! empty( $t['where'] ) ? ', ' . $t['where'] : '' ), ', ' );
-		$html .= '<figure class="homeflip-t-card"><blockquote>&ldquo;' . esc_html( $t['quote'] ) . '&rdquo;</blockquote>'
-			. ( $who ? '<figcaption>' . esc_html( $who ) . '</figcaption>' : '' ) . '</figure>';
-	}
-	$html .= '</div></div>';
-	$html .= '<style>.homeflip-testimonials{text-align:center}.homeflip-t-title{color:var(--e-global-color-primary);font-size:36px;font-weight:700;margin:0 0 28px}'
-		. '.homeflip-t-grid{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}'
-		. '.homeflip-t-card{margin:0;padding:28px;background:#fff;border-radius:10px;box-shadow:0 4px 18px rgba(0,0,0,.08);text-align:left}'
-		. '.homeflip-t-card blockquote{margin:0 0 14px;font-size:18px;line-height:1.6;color:var(--e-global-color-text)}'
-		. '.homeflip-t-card figcaption{font-weight:700;color:var(--e-global-color-primary)}</style>';
-	return $html;
-}
+/**
+ * [homeflip_testimonials] -- RETIRED 2026-09-28 (Gary: testimonials are not a
+ * setting; customers add them in Elementor like any other content). Kept as a
+ * no-op so a page built by 0.4.x never prints the raw shortcode.
+ */
 add_action(
 	'init',
 	function () {
-		add_shortcode( 'homeflip_testimonials', 'homeflip_testimonials_shortcode' );
+		add_shortcode( 'homeflip_testimonials', '__return_empty_string' );
 	}
 );
 
@@ -191,16 +186,17 @@ add_action(
 /* -------------------------------------------------------------------------- */
 
 function homeflip_setup_menu() {
+	// Not "HomeFlip" and not the house icon: the Properties menu already uses the
+	// house, and customers read this as THEIR brand settings (Gary, 2026-09-28).
 	add_menu_page(
-		'Website Setup',
-		'HomeFlip',
+		'Your Brand',
+		'Your Brand',
 		'manage_options',
 		'homeflip-setup',
 		'homeflip_setup_page',
-		'dashicons-admin-home',
+		'dashicons-art',
 		3
 	);
-	add_submenu_page( 'homeflip-setup', 'Website Setup', 'Website Setup', 'manage_options', 'homeflip-setup', 'homeflip_setup_page' );
 }
 add_action( 'admin_menu', 'homeflip_setup_menu' );
 
@@ -273,15 +269,6 @@ function homeflip_setup_save() {
 		}
 	}
 
-	$ts = array();
-	foreach ( (array) ( $p['t'] ?? array() ) as $t ) {
-		$ts[] = array(
-			'quote' => sanitize_textarea_field( $t['quote'] ?? '' ),
-			'name'  => sanitize_text_field( $t['name'] ?? '' ),
-			'where' => sanitize_text_field( $t['where'] ?? '' ),
-		);
-	}
-	update_option( HOMEFLIP_TESTIMONIALS_OPTION, $ts, false );
 
 	homeflip_purge_caches(); // colors live in Elementor's generated CSS
 	add_settings_error( 'homeflip', 'saved', 'Saved. Your website is updated.', 'updated' );
@@ -292,7 +279,6 @@ function homeflip_setup_page() {
 		homeflip_setup_save();
 	}
 	$biz    = (array) get_option( HOMEFLIP_BUSINESS_OPTION, array() );
-	$ts     = array_pad( (array) get_option( HOMEFLIP_TESTIMONIALS_OPTION, array() ), 3, array() );
 	$filled = count( array_filter( $biz ) );
 	$total  = count( homeflip_business_fields() );
 	$help   = array(
@@ -306,7 +292,7 @@ function homeflip_setup_page() {
 	);
 	?>
 	<div class="wrap" style="max-width:900px">
-		<h1>Website Setup</h1>
+		<h1>Your Brand</h1>
 		<p style="font-size:14px">Everything your website needs, in one place. Changes show on your site as soon as you save.
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" target="_blank">View your site &rarr;</a></p>
 		<?php settings_errors( 'homeflip' ); ?>
@@ -341,17 +327,6 @@ function homeflip_setup_page() {
 				<tr><th>Photo</th><td><?php homeflip_media_field( 'hero_image', (int) get_option( HOMEFLIP_HERO_OPTION ), 'Choose a homepage photo', 'The large photo behind your homepage headline. A wide photo of a house works best. Your main color is laid over it so the words stay easy to read.' ); ?></td></tr>
 			</table>
 
-			<h2>4. Testimonials</h2>
-			<p>Real words from sellers you have helped. Leave these empty and the section stays hidden until you have some.</p>
-			<table class="form-table" role="presentation">
-				<?php foreach ( array_slice( $ts, 0, 3 ) as $i => $t ) : ?>
-					<tr><th>Testimonial <?php echo (int) $i + 1; ?></th><td>
-						<textarea class="large-text" rows="3" name="t[<?php echo (int) $i; ?>][quote]" placeholder="What they said"><?php echo esc_textarea( $t['quote'] ?? '' ); ?></textarea>
-						<input class="regular-text" style="max-width:200px" name="t[<?php echo (int) $i; ?>][name]" placeholder="First name" value="<?php echo esc_attr( $t['name'] ?? '' ); ?>">
-						<input class="regular-text" style="max-width:200px" name="t[<?php echo (int) $i; ?>][where]" placeholder="City, State" value="<?php echo esc_attr( $t['where'] ?? '' ); ?>">
-					</td></tr>
-				<?php endforeach; ?>
-			</table>
 
 			<p class="submit"><button type="submit" name="homeflip_setup_save" value="1" class="button button-primary button-hero">Save and update my website</button></p>
 		</form>

@@ -233,9 +233,6 @@ def page_home():
             shortcode('[homeflip_form name="seller"]'),
         ], bg='secondary', anchor='offer', narrow=True),
 
-        # Filled from HomeFlip -> Website Setup; the band hides itself when empty
-        # (never ship invented or bracketed testimonials on a live site).
-        section([shortcode('[homeflip_testimonials]')], css='homeflip-t-section'),
 
         section([
             heading('Frequently asked questions', 'h2'),
@@ -363,7 +360,7 @@ HELP for help. Carriers are not liable for delayed or undelivered messages. See 
 
 PAGES = [
     # slug, title, VERSION, starter page (title, path, flags) or None, builder
-    ('home', 'Home: We Buy Houses', 2,
+    ('home', 'Home: We Buy Houses', 3,
      {'title': 'Home', 'path': 'home', 'front_page': True}, page_home),
     ('buyers-list', 'Join Our Buyers List', 2,
      {'title': 'Join Our Buyers List', 'path': 'buyers-list'}, page_buyers_list),

@@ -4,7 +4,7 @@
  * Description:       Receives property data from the HomeFlip CRM and renders it into any
  *                    page builder via shortcodes. Registers the `property` post type and
  *                    the HomeFlip meta fields, exposed to the REST API.
- * Version:           0.4.1
+ * Version:           0.4.2
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            HomeFlip

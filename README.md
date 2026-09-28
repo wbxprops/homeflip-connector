@@ -115,15 +115,16 @@ page comes next, built from template 7860 with a real property.
 
 **0.4.0** (Gary, 2026-09-28: "we need placeholders... one page where the user sets up everything"):
 
-- **HomeFlip -> Website Setup** (`includes/setup.php`), one wp-admin screen: website title,
+- **Your Brand** admin page (`includes/setup.php`; was "HomeFlip -> Website Setup" in 0.4.0/0.4.1), one wp-admin screen: website title,
   tagline, logo, browser icon, main + button color (written to Elementor Global Colors), business
-  details, homepage photo, up to 3 testimonials. Save purges caches.
+  details, homepage photo. Save purges caches. **0.4.2:** menu renamed "Your Brand" with the palette icon
+  (Properties already uses the house), testimonials removed (Gary: not a setting, customers add
+  them in Elementor); `[homeflip_testimonials]` is kept as a no-op for pages built by 0.4.x.
 - **Placeholders** on a fresh site, once: `assets/logo-placeholder.png` as the logo and
   `assets/hero-house.jpg` (CC0, see `assets/CREDITS.md`) behind every hero, under a brand-color
   overlay. The photo is CSS on `.homeflip-hero`, so changing it never edits a page.
 - **No red markers on public designs.** `[homeflip_business]` takes `before` / `after` /
-  `fallback`; `[homeflip_contact]` prints only the filled lines; `[homeflip_testimonials]` prints
-  nothing when empty and its band hides (`:has()`).
+  `fallback`; `[homeflip_contact]` prints only the filled lines.
 - A **Main Menu** in the header slot, once.
 
 No PHP available locally, so syntax is checked by installing on the template site.

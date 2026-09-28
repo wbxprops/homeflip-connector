@@ -13,7 +13,7 @@
  * the phone button is its own shortcode, [homeflip_phone_button].
  *
  * Empty on the template on purpose: it is cloned, and a business detail in it
- * would show on every customer's site. Set on HomeFlip -> Website Setup.
+ * would show on every customer's site. Set on the "Your Brand" admin page.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -44,7 +44,7 @@ function homeflip_business( $field ) {
  *
  * Filled: before + value + after. Empty: the fallback, for EVERYONE -- no red
  * "not set" marker on a public design (Gary, 2026-09-28: the markers made the
- * template look broken). What is missing is listed on the Website Setup page
+ * template look broken). What is missing is listed on the "Your Brand" page
  * instead. `name` falls back to the site title so it is never blank.
  */
 function homeflip_business_shortcode( $atts ) {

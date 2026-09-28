@@ -1,7 +1,7 @@
 {
  "slug": "home",
  "title": "Home: We Buy Houses",
- "homeflip_version": 2,
+ "homeflip_version": 3,
  "type": "page",
  "page": {
   "title": "Home",
@@ -592,51 +592,7 @@
    ]
   },
   {
-   "id": "5065ccb",
-   "elType": "container",
-   "isInner": false,
-   "settings": {
-    "content_width": "boxed",
-    "flex_direction": "column",
-    "flex_align_items": "center",
-    "flex_gap": {
-     "unit": "px",
-     "size": 20,
-     "column": "20",
-     "row": "20"
-    },
-    "padding": {
-     "unit": "px",
-     "top": "80",
-     "right": "20",
-     "bottom": "80",
-     "left": "20",
-     "isLinked": false
-    },
-    "padding_mobile": {
-     "unit": "px",
-     "top": "40",
-     "right": "16",
-     "bottom": "40",
-     "left": "16",
-     "isLinked": false
-    },
-    "css_classes": "homeflip-t-section"
-   },
-   "elements": [
-    {
-     "id": "5d93dec",
-     "elType": "widget",
-     "widgetType": "shortcode",
-     "elements": [],
-     "settings": {
-      "shortcode": "[homeflip_testimonials]"
-     }
-    }
-   ]
-  },
-  {
-   "id": "ab59f21",
+   "id": "aa6072e",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -672,7 +628,7 @@
    },
    "elements": [
     {
-     "id": "d2c4431",
+     "id": "3ec19d8",
      "elType": "widget",
      "widgetType": "heading",
      "elements": [],
@@ -700,7 +656,7 @@
      }
     },
     {
-     "id": "1529218",
+     "id": "70f0429",
      "elType": "container",
      "isInner": true,
      "settings": {
@@ -717,7 +673,84 @@
      },
      "elements": [
       {
-       "id": "5337d68",
+       "id": "6525f15",
+       "elType": "container",
+       "isInner": true,
+       "settings": {
+        "content_width": "full",
+        "flex_direction": "column",
+        "width": {
+         "unit": "%",
+         "size": 48.0
+        },
+        "width_mobile": {
+         "unit": "%",
+         "size": 100
+        },
+        "padding": {
+         "unit": "px",
+         "top": "10",
+         "right": "10",
+         "bottom": "10",
+         "left": "10",
+         "isLinked": false
+        }
+       },
+       "elements": [
+        {
+         "id": "f3d1c48",
+         "elType": "widget",
+         "widgetType": "heading",
+         "elements": [],
+         "settings": {
+          "title": "How much will you pay for my house?",
+          "header_size": "h3",
+          "align": "left",
+          "typography_typography": "custom",
+          "typography_font_size": {
+           "unit": "px",
+           "size": 21
+          },
+          "typography_font_size_mobile": {
+           "unit": "px",
+           "size": 24
+          },
+          "typography_font_weight": "700",
+          "typography_line_height": {
+           "unit": "em",
+           "size": 1.2
+          },
+          "__globals__": {
+           "title_color": "globals/colors?id=primary"
+          }
+         }
+        },
+        {
+         "id": "8d0520b",
+         "elType": "widget",
+         "widgetType": "text-editor",
+         "elements": [],
+         "settings": {
+          "editor": "<p>Every house and situation is different. We look at the condition of the house, the repairs it needs, and what similar homes nearby have sold for, then make you a fair offer. You are never under any obligation to accept.</p>",
+          "align": "left",
+          "typography_typography": "custom",
+          "typography_font_size": {
+           "unit": "px",
+           "size": 17
+          },
+          "typography_line_height": {
+           "unit": "em",
+           "size": 1.6
+          },
+          "__globals__": {
+           "text_color": "globals/colors?id=text"
+          }
+         }
+        }
+       ]
+      },
+      {
+       "id": "bf2b81a",
        "elType": "container",
        "isInner": true,
        "settings": {
@@ -747,7 +780,7 @@
          "widgetType": "heading",
          "elements": [],
          "settings": {
-          "title": "How much will you pay for my house?",
+          "title": "Will this cost me anything?",
           "header_size": "h3",
           "align": "left",
           "typography_typography": "custom",
@@ -775,7 +808,84 @@
          "widgetType": "text-editor",
          "elements": [],
          "settings": {
-          "editor": "<p>Every house and situation is different. We look at the condition of the house, the repairs it needs, and what similar homes nearby have sold for, then make you a fair offer. You are never under any obligation to accept.</p>",
+          "editor": "<p>There are no agent commissions. We will walk you through every cost before you sign anything, so there are no surprises at closing.</p>",
+          "align": "left",
+          "typography_typography": "custom",
+          "typography_font_size": {
+           "unit": "px",
+           "size": 17
+          },
+          "typography_line_height": {
+           "unit": "em",
+           "size": 1.6
+          },
+          "__globals__": {
+           "text_color": "globals/colors?id=text"
+          }
+         }
+        }
+       ]
+      },
+      {
+       "id": "5337d68",
+       "elType": "container",
+       "isInner": true,
+       "settings": {
+        "content_width": "full",
+        "flex_direction": "column",
+        "width": {
+         "unit": "%",
+         "size": 48.0
+        },
+        "width_mobile": {
+         "unit": "%",
+         "size": 100
+        },
+        "padding": {
+         "unit": "px",
+         "top": "10",
+         "right": "10",
+         "bottom": "10",
+         "left": "10",
+         "isLinked": false
+        }
+       },
+       "elements": [
+        {
+         "id": "a9efeb3",
+         "elType": "widget",
+         "widgetType": "heading",
+         "elements": [],
+         "settings": {
+          "title": "Do I need to make repairs first?",
+          "header_size": "h3",
+          "align": "left",
+          "typography_typography": "custom",
+          "typography_font_size": {
+           "unit": "px",
+           "size": 21
+          },
+          "typography_font_size_mobile": {
+           "unit": "px",
+           "size": 24
+          },
+          "typography_font_weight": "700",
+          "typography_line_height": {
+           "unit": "em",
+           "size": 1.2
+          },
+          "__globals__": {
+           "title_color": "globals/colors?id=primary"
+          }
+         }
+        },
+        {
+         "id": "757cb8d",
+         "elType": "widget",
+         "widgetType": "text-editor",
+         "elements": [],
+         "settings": {
+          "editor": "<p>No. We buy houses as-is. You do not need to fix, clean or update anything.</p>",
           "align": "left",
           "typography_typography": "custom",
           "typography_font_size": {
@@ -819,12 +929,12 @@
        },
        "elements": [
         {
-         "id": "a9efeb3",
+         "id": "2a2e8fb",
          "elType": "widget",
          "widgetType": "heading",
          "elements": [],
          "settings": {
-          "title": "Will this cost me anything?",
+          "title": "How fast can you close?",
           "header_size": "h3",
           "align": "left",
           "typography_typography": "custom",
@@ -847,12 +957,12 @@
          }
         },
         {
-         "id": "757cb8d",
+         "id": "51ceb92",
          "elType": "widget",
          "widgetType": "text-editor",
          "elements": [],
          "settings": {
-          "editor": "<p>There are no agent commissions. We will walk you through every cost before you sign anything, so there are no surprises at closing.</p>",
+          "editor": "<p>We close on your timeline. If you need to move quickly, we can. If you need more time, we will work around your schedule.</p>",
           "align": "left",
           "typography_typography": "custom",
           "typography_font_size": {
@@ -896,12 +1006,12 @@
        },
        "elements": [
         {
-         "id": "2a2e8fb",
+         "id": "db9d061",
          "elType": "widget",
          "widgetType": "heading",
          "elements": [],
          "settings": {
-          "title": "Do I need to make repairs first?",
+          "title": "How do I get my money?",
           "header_size": "h3",
           "align": "left",
           "typography_typography": "custom",
@@ -924,12 +1034,12 @@
          }
         },
         {
-         "id": "51ceb92",
+         "id": "3f0edf4",
          "elType": "widget",
          "widgetType": "text-editor",
          "elements": [],
          "settings": {
-          "editor": "<p>No. We buy houses as-is. You do not need to fix, clean or update anything.</p>",
+          "editor": "<p>We close with a licensed local title company. They can wire your money to you at closing or hand you a check, whichever you prefer.</p>",
           "align": "left",
           "typography_typography": "custom",
           "typography_font_size": {
@@ -973,161 +1083,7 @@
        },
        "elements": [
         {
-         "id": "db9d061",
-         "elType": "widget",
-         "widgetType": "heading",
-         "elements": [],
-         "settings": {
-          "title": "How fast can you close?",
-          "header_size": "h3",
-          "align": "left",
-          "typography_typography": "custom",
-          "typography_font_size": {
-           "unit": "px",
-           "size": 21
-          },
-          "typography_font_size_mobile": {
-           "unit": "px",
-           "size": 24
-          },
-          "typography_font_weight": "700",
-          "typography_line_height": {
-           "unit": "em",
-           "size": 1.2
-          },
-          "__globals__": {
-           "title_color": "globals/colors?id=primary"
-          }
-         }
-        },
-        {
-         "id": "3f0edf4",
-         "elType": "widget",
-         "widgetType": "text-editor",
-         "elements": [],
-         "settings": {
-          "editor": "<p>We close on your timeline. If you need to move quickly, we can. If you need more time, we will work around your schedule.</p>",
-          "align": "left",
-          "typography_typography": "custom",
-          "typography_font_size": {
-           "unit": "px",
-           "size": 17
-          },
-          "typography_line_height": {
-           "unit": "em",
-           "size": 1.6
-          },
-          "__globals__": {
-           "text_color": "globals/colors?id=text"
-          }
-         }
-        }
-       ]
-      },
-      {
-       "id": "f7c05e2",
-       "elType": "container",
-       "isInner": true,
-       "settings": {
-        "content_width": "full",
-        "flex_direction": "column",
-        "width": {
-         "unit": "%",
-         "size": 48.0
-        },
-        "width_mobile": {
-         "unit": "%",
-         "size": 100
-        },
-        "padding": {
-         "unit": "px",
-         "top": "10",
-         "right": "10",
-         "bottom": "10",
-         "left": "10",
-         "isLinked": false
-        }
-       },
-       "elements": [
-        {
          "id": "6d339d3",
-         "elType": "widget",
-         "widgetType": "heading",
-         "elements": [],
-         "settings": {
-          "title": "How do I get my money?",
-          "header_size": "h3",
-          "align": "left",
-          "typography_typography": "custom",
-          "typography_font_size": {
-           "unit": "px",
-           "size": 21
-          },
-          "typography_font_size_mobile": {
-           "unit": "px",
-           "size": 24
-          },
-          "typography_font_weight": "700",
-          "typography_line_height": {
-           "unit": "em",
-           "size": 1.2
-          },
-          "__globals__": {
-           "title_color": "globals/colors?id=primary"
-          }
-         }
-        },
-        {
-         "id": "71880c6",
-         "elType": "widget",
-         "widgetType": "text-editor",
-         "elements": [],
-         "settings": {
-          "editor": "<p>We close with a licensed local title company. They can wire your money to you at closing or hand you a check, whichever you prefer.</p>",
-          "align": "left",
-          "typography_typography": "custom",
-          "typography_font_size": {
-           "unit": "px",
-           "size": 17
-          },
-          "typography_line_height": {
-           "unit": "em",
-           "size": 1.6
-          },
-          "__globals__": {
-           "text_color": "globals/colors?id=text"
-          }
-         }
-        }
-       ]
-      },
-      {
-       "id": "581e7af",
-       "elType": "container",
-       "isInner": true,
-       "settings": {
-        "content_width": "full",
-        "flex_direction": "column",
-        "width": {
-         "unit": "%",
-         "size": 48.0
-        },
-        "width_mobile": {
-         "unit": "%",
-         "size": 100
-        },
-        "padding": {
-         "unit": "px",
-         "top": "10",
-         "right": "10",
-         "bottom": "10",
-         "left": "10",
-         "isLinked": false
-        }
-       },
-       "elements": [
-        {
-         "id": "0efead7",
          "elType": "widget",
          "widgetType": "heading",
          "elements": [],
@@ -1155,7 +1111,7 @@
          }
         },
         {
-         "id": "609bc2d",
+         "id": "71880c6",
          "elType": "widget",
          "widgetType": "text-editor",
          "elements": [],
@@ -1183,7 +1139,7 @@
    ]
   },
   {
-   "id": "b3773a4",
+   "id": "fb38743",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -1215,7 +1171,7 @@
    },
    "elements": [
     {
-     "id": "7b063d5",
+     "id": "8fc66e2",
      "elType": "widget",
      "widgetType": "heading",
      "elements": [],
@@ -1243,7 +1199,7 @@
      }
     },
     {
-     "id": "fbbdbaf",
+     "id": "8621f0f",
      "elType": "widget",
      "widgetType": "text-editor",
      "elements": [],
@@ -1265,7 +1221,7 @@
      }
     },
     {
-     "id": "cc6c9b2",
+     "id": "155d6a4",
      "elType": "widget",
      "widgetType": "button",
      "elements": [],
@@ -1297,7 +1253,7 @@
    ]
   },
   {
-   "id": "95b7fa4",
+   "id": "4da916f",
    "elType": "container",
    "isInner": false,
    "settings": {
@@ -1333,7 +1289,7 @@
    },
    "elements": [
     {
-     "id": "4f01c59",
+     "id": "e5cc2b5",
      "elType": "widget",
      "widgetType": "heading",
      "elements": [],
@@ -1361,7 +1317,7 @@
      }
     },
     {
-     "id": "46ca49c",
+     "id": "da3325d",
      "elType": "widget",
      "widgetType": "text-editor",
      "elements": [],
@@ -1383,7 +1339,7 @@
      }
     },
     {
-     "id": "c070348",
+     "id": "2b893fa",
      "elType": "widget",
      "widgetType": "shortcode",
      "elements": [],
@@ -1392,7 +1348,7 @@
      }
     },
     {
-     "id": "966b033",
+     "id": "46ca49c",
      "elType": "widget",
      "widgetType": "text-editor",
      "elements": [],
