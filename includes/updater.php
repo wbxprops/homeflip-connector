@@ -23,13 +23,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 const HOMEFLIP_UPDATE_INFO = 'https://github.com/wbxprops/homeflip-connector/releases/latest/download/info.json';
 
 /**
- * Latest release info, cached 6 hours. A failed fetch is cached for 1 hour so
+ * Latest release info, cached 1 hour. A failed fetch is cached 15 minutes so
  * a GitHub outage never slows wp-admin down on every page.
  *
  * @return array|null
  */
 function homeflip_latest_release() {
-	$cached = get_site_transient( 'homeflip_update_info' );
+	// Dashboard -> Updates -> "Check again" (update-core.php?force-check=1) must
+	// really ask GitHub. 0.2.2-0.4.0 only cleared WordPress's own transient, so a
+	// 6-hour cache of OUR answer hid 0.4.0 from Gary on 2026-09-28.
+	$forced = is_admin() && ! empty( $_GET['force-check'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only
+	$cached = $forced ? false : get_site_transient( 'homeflip_update_info' );
 	if ( false !== $cached ) {
 		return is_array( $cached ) ? $cached : null;
 	}
@@ -43,7 +47,7 @@ function homeflip_latest_release() {
 		}
 	}
 
-	set_site_transient( 'homeflip_update_info', $info ? $info : 'none', $info ? 6 * HOUR_IN_SECONDS : HOUR_IN_SECONDS );
+	set_site_transient( 'homeflip_update_info', $info ? $info : 'none', $info ? HOUR_IN_SECONDS : 15 * MINUTE_IN_SECONDS );
 	return $info;
 }
 
