@@ -121,8 +121,8 @@ No PHP available locally, so syntax is checked by installing on the template sit
 2. Commit in ai-projects (the script refuses uncommitted connector changes)
 3. `bash homeflip-connector/release.sh` builds the zip, pushes this folder to
    `github.com/wbxprops/homeflip-connector` main (`git subtree split`; the source of truth stays
-   here), creates release `vX.Y.Z` with `homeflip-connector.zip` + `info.json`, and copies the
-   zip to Downloads
+   here), creates release `vX.Y.Z` with `homeflip-connector.zip` + `info.json`; sites pick it up
+   from Dashboard -> Updates
 
 ## Still to build
 
